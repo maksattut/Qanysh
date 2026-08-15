@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  <title>{{ page.title | default: site.title }}</title>
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+  {% feed_meta %}
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="{{ '/' | relative_url }}">
+      <span class="brand-mark">Q</span>
+      <span><strong>QANYSH</strong><small>ҒЫЛЫМ</small></span>
+    </a>
+    <nav>
+      <a href="{{ '/' | relative_url }}">Жаңалықтар</a>
+      <a href="{{ '/#about' | relative_url }}">Біз туралы</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" aria-label="Тақырыпты ауыстыру">☾</button>
+  </div>
+</header>
+
+{{ content }}
+
+<footer>
+  <div class="container footer-inner">
+    <strong>QANYSH</strong>
+    <span>© {{ site.time | date: "%Y" }} · Әлем ғылымы қазақ тілінде</span>
+  </div>
+</footer>
+
+<script>
+const btn = document.getElementById("themeBtn");
+btn.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  btn.textContent = document.body.classList.contains("dark") ? "☀" : "☾";
+});
+</script>
+</body>
+</html>

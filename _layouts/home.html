@@ -1,0 +1,103 @@
+---
+layout: default
+---
+
+<main>
+  <section class="hero container">
+    <div class="hero-copy">
+      <p class="eyebrow">QANYSH · ҒЫЛЫМ</p>
+      <h1>Әлем ғылымы<br><em>қазақ тілінде.</em></h1>
+      <p class="hero-text">
+        Ғылымдағы маңызды жаңалықтар, жаңа зерттеулер мен технологиялар
+        туралы түсінікті қазақ тіліндегі материалдар.
+      </p>
+      <a class="button" href="#latest">Соңғы жаңалықтарды оқу →</a>
+    </div>
+    <div class="hero-art">
+      <img src="{{ '/images/qanysh-logo.png' | relative_url }}" alt="QANYSH логотипі">
+    </div>
+  </section>
+
+  {% assign posts = site.posts %}
+  {% if posts.size > 0 %}
+  {% assign featured = posts.first %}
+  <section class="featured container">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">НЕГІЗГІ ЖАҢАЛЫҚ</p>
+        <h2>Басты материал</h2>
+      </div>
+    </div>
+    <article class="featured-card">
+      <div class="featured-image">
+        {% if featured.image %}
+          <img src="{{ featured.image | relative_url }}" alt="{{ featured.title }}">
+        {% else %}
+          <div class="image-placeholder">QANYSH</div>
+        {% endif %}
+      </div>
+      <div class="featured-copy">
+        <div class="card-date">{{ featured.date | date: "%d.%m.%Y" }}</div>
+        <h3><a href="{{ featured.url | relative_url }}">{{ featured.title }}</a></h3>
+        <p>{{ featured.description }}</p>
+        <a class="read" href="{{ featured.url | relative_url }}">Толығырақ →</a>
+      </div>
+    </article>
+  </section>
+  {% endif %}
+
+  <section class="latest container" id="latest">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">СОҢҒЫ ЖАРИЯЛАНЫМДАР</p>
+        <h2>Ғылым әлемінен</h2>
+      </div>
+      <div class="search">
+        <input id="searchInput" type="search" placeholder="Іздеу..." aria-label="Жаңалықтарды іздеу">
+      </div>
+    </div>
+
+    <div id="articles" class="article-grid">
+      {% for post in site.posts %}
+      <article class="card">
+        {% if post.image %}
+        <img class="card-image" src="{{ post.image | relative_url }}" alt="{{ post.title }}">
+        {% endif %}
+        <div class="card-date">{{ post.date | date: "%d.%m.%Y" }}</div>
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        <p>{{ post.description }}</p>
+        <a class="read" href="{{ post.url | relative_url }}">Толығырақ →</a>
+      </article>
+      {% endfor %}
+    </div>
+    <p id="emptyState" class="empty" hidden>Іздеу бойынша материал табылмады.</p>
+  </section>
+
+  <section class="about container" id="about">
+    <div>
+      <p class="eyebrow">QANYSH</p>
+      <h2>Ғылым қазақ тілінде де қызықты.</h2>
+    </div>
+    <p>
+      QANYSH — әлемдегі ғылыми жаңалықтарды қазақ оқырманына қарапайым,
+      түсінікті және қызықты тілде жеткізуге арналған тәуелсіз ғылыми портал.
+    </p>
+  </section>
+</main>
+
+<script>
+const search = document.getElementById("searchInput");
+const cards = [...document.querySelectorAll(".card")];
+const empty = document.getElementById("emptyState");
+
+search?.addEventListener("input", () => {
+  const q = search.value.toLowerCase().trim();
+  let visible = 0;
+  cards.forEach(card => {
+    const match = card.innerText.toLowerCase().includes(q);
+    card.style.display = match ? "" : "none";
+    if (match) visible++;
+  });
+  empty.hidden = visible !== 0;
+});
+</script>
